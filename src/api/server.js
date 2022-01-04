@@ -205,10 +205,12 @@ export const handlers = [
     )
   }),
   rest.get('/fakeApi/notifications', (req, res, ctx) => {
+    console.log('run');
+    const since = req.url.searchParams.get('since')
     const numNotifications = getRandomInt(1, 5)
 
     let notifications = generateRandomNotifications(
-      undefined,
+      since,
       numNotifications,
       db
     )
@@ -249,6 +251,7 @@ export const forceGenerateNotifications = (since) => {
 
 socketServer.on('connection', (socket) => {
   currentSocket = socket
+  console.log('pog');
 
   socket.on('message', (data) => {
     const message = JSON.parse(data)
@@ -295,6 +298,8 @@ function generateRandomNotifications(since, numNotifications, db) {
       date: faker.date.between(pastDate, now).toISOString(),
       message: template,
       user: user.id,
+      read: false,
+      isNew: false,
     }
   })
 

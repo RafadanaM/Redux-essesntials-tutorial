@@ -8,11 +8,7 @@ import {TimeAgo} from './TimeAgo'
 
 export const SinglePostPage = ({ match }) => {
   const { postId } = match.params
-
-  const post = useSelector(state =>
-    state.posts.find(state => selectPostById(state, postId))
-  )
-
+  const post = useSelector(state => selectPostById(state, postId))
   if (!post) {
     return (
       <section>
@@ -24,7 +20,6 @@ export const SinglePostPage = ({ match }) => {
   return (
     <section>
       <article className="post">
-      
         <h2>{post.title}</h2>
         <div>
         <PostAuthor userId={post.user} />
